@@ -38,6 +38,13 @@ async function run() {
         res.send(product);
     });
 
+    // create a new product via post method
+    app.post('/product', async(req, res) =>{
+        const newProduct = req.body;
+        const result = await userCollection.insertOne(newProduct);
+        res.send(result)
+    });
+
     // update quantity for a product
     app.put('/product/:id', async(req, res) =>{
       const id = req.params.id;
