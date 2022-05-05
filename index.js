@@ -30,6 +30,16 @@ async function run() {
             res.send(products)
         })
 
+        //get products for a specific user via user email
+        app.get('/myProducts', async (req, res) => {
+            const email=req.query.email;
+            console.log(email);
+            const query = {userEmail:email};
+            const cursor = productCollection.find(query);
+            const products = await cursor.toArray();
+            res.send(products)
+        })
+
         //get a single product by id
         app.get('/product/:id', async (req, res) => {
             const id = req.params.id;
@@ -64,6 +74,7 @@ async function run() {
         // delete a product via id
         app.delete('/product/:id', async(req, res) =>{
             const id = req.params.id;
+            console.log(id);
             const query = {_id: ObjectId(id)};
             const result = await productCollection.deleteOne(query);
             res.send(result);
